@@ -46,11 +46,12 @@ def submit():
 def wait_for_db():
     while True:
         try:
-            cur = mysql.connection.cursor()
-            cur.close()
-            break
-        except Exception:
-            print("Waiting for MySQL...")
+            with app.app_context():
+                cur = mysql.connection.cursor()
+                cur.close()
+                break
+        except Exception as e:
+            print(f"Waiting for MySQL... ({e})")
             time.sleep(2)
 
 if __name__ == '__main__':
