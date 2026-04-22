@@ -29,7 +29,7 @@ def init_db():
 @app.route('/')
 def hello():
     cur = mysql.connection.cursor()
-    cur.execute('SELECT message FROM messages')
+    cur.execute('SELECT id, message FROM messages')
     messages = cur.fetchall()
     cur.close()
     return render_template('index.html', messages=messages)
@@ -40,8 +40,17 @@ def submit():
     cur = mysql.connection.cursor()
     cur.execute('INSERT INTO messages (message) VALUES (%s)', [new_message])
     mysql.connection.commit()
+    new_id = cur.lastrowid
     cur.close()
-    return jsonify({'message': new_message})
+    return jsonify({'id': new_id, 'message': new_message})
+
+@app.route('/delete/<int:msg_id>', methods=['POST'])
+def delete_message(msg_id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM messages WHERE id = %s', [msg_id])
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({'status': 'success'})
 
 def wait_for_db():
     while True:
