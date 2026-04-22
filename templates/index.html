@@ -210,7 +210,7 @@
           {% for message in messages %}
           <p data-id="{{ message[0] }}">
             <span class="msg-text">{{ message[1] }}</span>
-            <button class="delete-btn">X</button>
+            <button class="delete-btn" title="Delete">🗑️</button>
           </p>
           {% endfor %}
         </div>
@@ -247,7 +247,7 @@
               if (response && response.message) {
                 let newParagraph = $("<p></p>").attr("data-id", response.id);
                 let msgSpan = $("<span></span>").addClass("msg-text").text(response.message);
-                let delBtn = $("<button></button>").addClass("delete-btn").text("X");
+                let delBtn = $("<button></button>").addClass("delete-btn").text("🗑️").attr("title", "Delete");
                 newParagraph.append(msgSpan).append(delBtn);
                 $(".messages").append(newParagraph);
                 messageInput.val("");
