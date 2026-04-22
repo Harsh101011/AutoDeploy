@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env
+Dockerfile
+docker-compose.yml
+Jenkinsfile
+__pycache__/
+*.pyc
+*.md

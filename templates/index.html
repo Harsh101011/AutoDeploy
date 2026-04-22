@@ -223,7 +223,8 @@
             data: { new_message: message },
             success: function (response) {
               if (response && response.message) {
-                $(".messages").append("<p>" + response.message + "</p>");
+                let newParagraph = $("<p></p>").text(response.message);
+                $(".messages").append(newParagraph);
                 messageInput.val("");
               }
             },

@@ -54,7 +54,9 @@ def wait_for_db():
             print(f"Waiting for MySQL... ({e})")
             time.sleep(2)
 
+# Initialize database before handling requests
+wait_for_db()
+init_db()
+
 if __name__ == '__main__':
-    wait_for_db()
-    init_db()
     app.run(host='0.0.0.0', port=5000)
