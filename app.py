@@ -1,4 +1,5 @@
 import os
+import time
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_mysqldb import MySQL
 
@@ -42,6 +43,17 @@ def submit():
     cur.close()
     return jsonify({'message': new_message})
 
+def wait_for_db():
+    while True:
+        try:
+            cur = mysql.connection.cursor()
+            cur.close()
+            break
+        except Exception:
+            print("Waiting for MySQL...")
+            time.sleep(2)
+
 if __name__ == '__main__':
+    wait_for_db()
     init_db()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000)
